@@ -263,6 +263,29 @@ pub fn first_sentence(text: &str) -> String {
     text.to_string()
 }
 
+/// A Home Assistant card's text without the opening that repeats its section,
+/// "Home Assistant integration for the X" becoming "The X".
+pub fn without_ha_opening(text: &str) -> String {
+    let Some(rest) = text.strip_prefix("Home Assistant ") else {
+        return text.to_string();
+    };
+    let mut out = rest;
+    for kind in ["integration", "add-on", "app"] {
+        if let Some(after) = rest.strip_prefix(kind) {
+            for joint in [": ", " for ", " that ", " to "] {
+                if let Some(tail) = after.strip_prefix(joint) {
+                    out = tail;
+                }
+            }
+        }
+    }
+    let mut chars = out.chars();
+    match chars.next() {
+        Some(first) => first.to_uppercase().chain(chars).collect(),
+        None => text.to_string(),
+    }
+}
+
 fn is_ordered_item(paragraph: &str) -> bool {
     let digits = paragraph.chars().take_while(char::is_ascii_digit).count();
     digits > 0 && paragraph[digits..].starts_with(". ")
@@ -409,5 +432,33 @@ mod tests {
         assert_eq!(first_sentence("Ends here. Then more."), "Ends here.");
         assert_eq!(first_sentence("Version 1.2 is out"), "Version 1.2 is out");
         assert_eq!(first_paragraph_sentence("# Only a title\n"), None);
+    }
+    #[test]
+    fn a_home_assistant_opening_is_dropped() {
+        assert_eq!(
+            without_ha_opening("Home Assistant integration for the Base Power home battery"),
+            "The Base Power home battery"
+        );
+        assert_eq!(
+            without_ha_opening("Home Assistant integration that records each run"),
+            "Records each run"
+        );
+        assert_eq!(
+            without_ha_opening("Home Assistant integration to reboot a gateway"),
+            "Reboot a gateway"
+        );
+        assert_eq!(
+            without_ha_opening("Home Assistant add-on: connector for a tunnel"),
+            "Connector for a tunnel"
+        );
+        assert_eq!(
+            without_ha_opening("Home Assistant app that runs the relay"),
+            "Runs the relay"
+        );
+        assert_eq!(
+            without_ha_opening("Home Assistant SleepIQ integration with massage"),
+            "SleepIQ integration with massage"
+        );
+        assert_eq!(without_ha_opening("Virtual switches"), "Virtual switches");
     }
 }

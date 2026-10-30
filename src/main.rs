@@ -257,7 +257,7 @@ fn build_page(
             render::Card {
                 name: p.repo.name.clone(),
                 url: p.repo.html_url.clone(),
-                desc: readme::first_sentence(&p.desc),
+                desc: readme::first_sentence(&readme::without_ha_opening(&p.desc)),
                 tag: None,
                 badges,
                 image,
