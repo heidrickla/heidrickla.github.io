@@ -1,0 +1,22 @@
+# GitHub account whose public repositories make the site.
+owner = "heidrickla"
+
+name = "Lewis Heidrick"
+eyebrow = "Open source, built and run at home"
+headline = "Integrations, network tools and reverse engineering."
+# {integrations} and {addons} become counted phrases such as "ten Home Assistant integrations".
+summary = "{integrations}, {addons}, virtual Cisco switches, browser RDP and firmware work, all public. Houston, TX."
+
+# Shown first, in this order. `image` is a path in the repository or a URL; without it the README's first image is used.
+featured = [
+  { repo = "SSLReverseProxy" },
+  { repo = "virtual-switches" },
+  { repo = "web-access" },
+  { repo = "ha-cloudflared-connector" },
+]
+
+# Tags for repositories outside Home Assistant, in display order. Ungrouped ones follow, tagged by topic or language.
+[groups]
+"Firmware" = ["tuxedo-touch-firmware", "glkvm-firmware"]
+"Reverse engineering" = ["iot-protocol-tools"]
+"Research" = ["x2plus1-research"]

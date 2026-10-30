@@ -1,0 +1,7 @@
+[
+  {"name": "ha-example", "html_url": "https://github.com/example/ha-example", "description": "An integration.", "language": "Python", "topics": ["hacs"], "default_branch": "main", "private": false, "fork": false, "archived": false, "stargazers_count": 3, "pushed_at": "2026-10-01T00:00:00Z"},
+  {"name": "secret-tool", "html_url": "https://github.com/example/secret-tool", "description": null, "language": "Rust", "topics": [], "default_branch": "main", "private": true, "fork": false, "archived": false, "stargazers_count": 0, "pushed_at": null},
+  {"name": "someone-elses", "html_url": "https://github.com/example/someone-elses", "description": "Fork.", "language": "Go", "topics": [], "default_branch": "master", "private": false, "fork": true, "archived": false, "stargazers_count": 0, "pushed_at": null},
+  {"name": "retired", "html_url": "https://github.com/example/retired", "description": "Old.", "language": "C", "topics": [], "default_branch": "main", "private": false, "fork": false, "archived": true, "stargazers_count": 0, "pushed_at": null},
+  {"name": "tool", "html_url": "https://github.com/example/tool", "description": "", "language": null, "default_branch": "trunk", "private": false, "fork": false, "archived": false}
+]

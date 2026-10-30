@@ -1,0 +1,61 @@
+name: checks
+
+# The forge's copy: format, lint and tests only. No deploy, and no test reaches the network.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    # the forge runner is shared; a hung run must not hold it
+    timeout-minutes: 30
+    env:
+      CARGO_TERM_COLOR: never
+      CARGO_INCREMENTAL: "0"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        timeout-minutes: 5
+
+      - name: toolchain (pinned)
+        timeout-minutes: 10
+        # rustup-init by version, checked against the digest its release publishes
+        run: |
+          v=1.29.1
+          curl --proto '=https' --tlsv1.2 -sSf --max-time 120 -o rustup-init "https://static.rust-lang.org/rustup/archive/$v/x86_64-unknown-linux-gnu/rustup-init"
+          echo "dda7234360b7f578ca8b0ddcb80145646fa61a67c1720a5abc7051b35c9fcb71  rustup-init" | sha256sum -c -
+          chmod +x rustup-init
+          ./rustup-init -y --profile minimal --default-toolchain 1.98.1 --component clippy,rustfmt
+          rm rustup-init
+          "$HOME/.cargo/bin/rustc" --version | grep -F ' 1.98.1 '
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+
+      # rust-cache never hits on this runner (the workspace path changes every run), so actions/cache keyed on the lock file
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        timeout-minutes: 10
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            target
+          key: ${{ runner.os }}-target-1.98.1-${{ hashFiles('Cargo.lock') }}
+
+      - name: format
+        timeout-minutes: 5
+        run: cargo fmt --check
+
+      - name: lint
+        timeout-minutes: 15
+        run: cargo clippy --locked --all-targets -- -D warnings
+
+      - name: test
+        timeout-minutes: 15
+        run: cargo test --locked

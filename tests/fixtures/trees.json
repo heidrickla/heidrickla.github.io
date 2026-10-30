@@ -1,0 +1,56 @@
+[
+  {
+    "name": "integration with HACS and a brand icon",
+    "paths": ["README.md", "hacs.json", "custom_components/glkvm/__init__.py", "custom_components/glkvm/manifest.json", "custom_components/glkvm/brand/icon.png", "custom_components/glkvm/brand/logo.png", "tests/fixtures/network_config.json"],
+    "kind": "integration",
+    "hacs": true,
+    "icon": "custom_components/glkvm/brand/icon.png"
+  },
+  {
+    "name": "integration without HACS, icon in a root brand folder",
+    "paths": ["README.md", "brand/icon.png", "custom_components/demo/manifest.json"],
+    "kind": "integration",
+    "hacs": false,
+    "icon": "brand/icon.png"
+  },
+  {
+    "name": "integration with no icon",
+    "paths": ["hacs.json", "custom_components/demo/manifest.json"],
+    "kind": "integration",
+    "hacs": true,
+    "icon": null
+  },
+  {
+    "name": "manifest outside custom_components is not an integration",
+    "paths": ["web/manifest.json", "custom_components/manifest.json", "src/custom_components/x/manifest.json"],
+    "kind": "other",
+    "icon": null
+  },
+  {
+    "name": "add-on one folder down beside repository.yaml",
+    "paths": ["README.md", "repository.yaml", "cloudflared_connector/config.yaml", "cloudflared_connector/icon.png", "cloudflared_connector/logo.png", "cloudflared_connector/connector/fixtures/demo/remote-config.json"],
+    "files": {"cloudflared_connector/config.yaml": "name: Cloudflared connector\nversion: 1.2.0\nslug: cloudflared_connector\narch:\n  - amd64\n"},
+    "kind": "addon",
+    "icon": "cloudflared_connector/icon.png"
+  },
+  {
+    "name": "add-on at the root in JSON with only a logo",
+    "paths": ["config.json", "logo.png", "Dockerfile"],
+    "files": {"config.json": "{\"name\": \"Relay\", \"slug\": \"relay\", \"version\": \"1\"}"},
+    "kind": "addon",
+    "icon": "logo.png"
+  },
+  {
+    "name": "a config.yaml without a slug is not an add-on",
+    "paths": ["config.yaml", "src/main.rs", "icon.png"],
+    "files": {"config.yaml": "server:\n  port: 8080\n"},
+    "kind": "other",
+    "icon": null
+  },
+  {
+    "name": "plain project",
+    "paths": ["README.md", "Cargo.toml", "src/main.rs", "docs/screenshot.png"],
+    "kind": "other",
+    "icon": null
+  }
+]

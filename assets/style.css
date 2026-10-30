@@ -1,0 +1,414 @@
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0B0D12;
+  --card: #141821;
+  --well: #0F1219;
+  --border: #232838;
+  --border-strong: #2A3040;
+  --border-hover: #3A4258;
+  --text: #E8EAF0;
+  --text-strong: #FFFFFF;
+  --text-2: #A9B0BF;
+  --accent: #4FD1B5;
+  --badge-bg: #12322C;
+  --badge-fg: #7DE3CB;
+  --tile-bg: #232838;
+  --tile-fg: #E8EAF0;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F5F6F8;
+  --card: #FFFFFF;
+  --well: #ECEEF2;
+  --border: #DCE0E8;
+  --border-strong: #C3C9D4;
+  --border-hover: #9AA3B2;
+  --text: #12151C;
+  --text-strong: #000000;
+  --text-2: #4A5262;
+  --accent: #0A7560;
+  --badge-bg: #DDF3EC;
+  --badge-fg: #075847;
+  --tile-bg: #E3E7EE;
+  --tile-fg: #12151C;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-strong);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.page {
+  max-width: 1248px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+/* Navigation */
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0 72px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav-link {
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--text-2);
+}
+
+.nav-outline {
+  padding: 10px 16px;
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+}
+
+.nav-outline:hover {
+  border-color: var(--border-hover);
+}
+
+.theme-toggle {
+  font: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  color: var(--text-strong);
+}
+
+/* Header */
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+  padding-bottom: 72px;
+}
+
+.intro p,
+.intro h1 {
+  margin: 0;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.intro h1 {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.lead {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+/* Sections */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 80px;
+}
+
+.section:last-child {
+  padding-bottom: 0;
+}
+
+.section h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.section h2.label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--text-2);
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.note {
+  font-size: 14px;
+  color: var(--text-2);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  gap: 12px;
+}
+
+/* Two columns on desktop so four featured cards make a square, one on phones. */
+.grid-featured {
+  grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr));
+  gap: 20px;
+}
+
+/* Cards */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 120ms ease;
+}
+
+.card:hover {
+  border-color: var(--border-hover);
+}
+
+.name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.tag {
+  font-size: 12px;
+  color: var(--text-2);
+  white-space: nowrap;
+}
+
+.tag-accent {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  background: var(--well);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.shot-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--text-2);
+}
+
+.feature-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px 22px;
+}
+
+.feature-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.feature .name {
+  font-size: 18px;
+}
+
+.feature .desc {
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ha {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.icon-initial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tile-bg);
+  color: var(--tile-fg);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.ha-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ha-head {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ha .name,
+.more .name {
+  font-size: 15px;
+}
+
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+}
+
+.more {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+}
+
+.more-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Footer */
+
+.footer {
+  margin-top: 80px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.footer a {
+  color: var(--text-2);
+}
+
+.footer a:hover {
+  color: var(--text);
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 24px 16px 64px;
+  }
+
+  .nav {
+    padding-bottom: 48px;
+  }
+
+  .intro {
+    padding-bottom: 56px;
+  }
+
+  .lead {
+    font-size: 17px;
+  }
+
+  .section {
+    padding-bottom: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}
