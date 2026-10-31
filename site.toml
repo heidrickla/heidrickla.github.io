@@ -11,7 +11,7 @@ summary = "{integrations}, {addons}, virtual Cisco switches, browser RDP and fir
 featured = [
   { repo = "SSLReverseProxy" },
   { repo = "virtual-switches" },
-  { repo = "web-access" },
+  { repo = "web-access", image = "docs/screenshots/servers.png" },
   { repo = "ha-cloudflared-connector" },
 ]
 
