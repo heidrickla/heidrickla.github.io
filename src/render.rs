@@ -63,13 +63,13 @@ pub fn capitalise(text: &str) -> String {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, serde::Serialize)]
 pub struct Image {
     pub src: String,
     pub alt: String,
 }
 
-#[derive(Clone)]
+#[derive(Clone, serde::Serialize)]
 pub struct Card {
     pub name: String,
     pub url: String,
@@ -81,6 +81,8 @@ pub struct Card {
     pub image: Option<Image>,
 }
 
+/// Also written as `projects.json`, which mainloop.works builds from.
+#[derive(serde::Serialize)]
 pub struct Page {
     pub owner: String,
     pub name: String,
@@ -303,6 +305,41 @@ mod tests {
             "&lt;a href=&quot;x&quot;&gt;Tom &amp; &#39;Jerry&#39;&lt;/a&gt;"
         );
         assert_eq!(esc("plain"), "plain");
+    }
+
+    #[test]
+    fn projects_json_carries_every_section_raw() {
+        let card = Card {
+            name: "a<b".into(),
+            url: "https://github.com/o/a".into(),
+            desc: "D".into(),
+            tag: None,
+            badges: vec!["HACS".into()],
+            image: Some(Image {
+                src: "img/a.png".into(),
+                alt: "A".into(),
+            }),
+        };
+        let value = serde_json::to_value(Page {
+            owner: "o".into(),
+            name: "N".into(),
+            eyebrow: "E".into(),
+            headline: "H".into(),
+            summary: "S".into(),
+            featured: vec![card.clone()],
+            home_assistant: vec![card.clone()],
+            more: vec![card],
+            built: "B".into(),
+        })
+        .unwrap();
+        for section in ["featured", "home_assistant", "more"] {
+            assert_eq!(
+                value[section][0]["name"], "a<b",
+                "{section} is not HTML-escaped"
+            );
+            assert_eq!(value[section][0]["image"]["src"], "img/a.png");
+        }
+        assert_eq!(value["built"], "B");
     }
 
     #[test]

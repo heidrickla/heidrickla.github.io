@@ -93,6 +93,9 @@ fn run() -> Result<(), String> {
         std::fs::write(out.join(name), bytes).map_err(|e| format!("writing {name}: {e}"))
     };
     write("index.html", html.as_bytes())?;
+    let json =
+        serde_json::to_string_pretty(&page).map_err(|e| format!("encoding projects.json: {e}"))?;
+    write("projects.json", json.as_bytes())?;
     write("style.css", STYLE.as_bytes())?;
     write("favicon.svg", FAVICON.as_bytes())?;
     write(".nojekyll", b"")?;
